@@ -5,10 +5,10 @@ const Header: FC = (): JSX.Element => {
     return (
         <Box component="nav" sx={{
             borderBottom: '1px solid',
-            borderBottomColor: 'neutral.200',
+            borderBottomColor: 'pokemonRed.primary.100',
             px: 2,
             py: 2,
-            backgroundColor: 'neutral.100'
+            backgroundColor: 'pokemonRed.primary.50'
         }}>
             <Typography level='h4' component="h4" fontStyle={'sm'}>PokeAPI</Typography>
         </Box>
