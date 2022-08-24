@@ -37,7 +37,7 @@ const App: FC = (): JSX.Element => {
                     <Box sx={{
                         display: 'flex',
                         flexFlow: 'column',
-                        minHeight: '100vh',
+                        height: '100vh',
                     }}>
                         <Header/>
                         <SearchBar/>

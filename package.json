@@ -12,12 +12,13 @@
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",
     "@mui/icons-material": "^5.8.4",
-    "@mui/joy": "^5.0.0-alpha.41",
+    "@mui/joy": "^5.0.0-alpha.42",
     "@mui/material": "^5.10.1",
     "@tanstack/query-sync-storage-persister": "^4.2.1",
     "@tanstack/react-query": "^4.2.1",
     "@tanstack/react-query-devtools": "^4.2.1",
     "@tanstack/react-query-persist-client": "^4.2.1",
+    "@tanstack/react-virtual": "^3.0.0-beta.18",
     "idb-keyval": "^6.2.0",
     "lz-string": "^1.4.4",
     "pokenode-ts": "^1.16.1",
@@ -29,7 +30,7 @@
     "@types/react": "^18.0.17",
     "@types/react-dom": "^18.0.6",
     "@vitejs/plugin-react": "^2.0.1",
-    "typescript": "^4.6.4",
-    "vite": "^3.0.7"
+    "typescript": "^4.7.4",
+    "vite": "^3.0.9"
   }
 }

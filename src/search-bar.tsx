@@ -5,7 +5,7 @@ import SearchIcon from '@mui/icons-material/Search';
 const SearchBar: FC = (): JSX.Element => {
     return (
         <Fragment>
-            <Box sx={{width: 1, py: 5, borderBottom: '1px solid', borderBottomColor: 'pokemonRed.primary.100'}}>
+            <Box sx={{width: 1, py: 5, borderBottom: '1px solid', borderBottomColor: 'pokemonRed.primary.100', flex: '0 0 auto'}}>
                 <Container maxWidth={'xl'}>
                     <Grid container spacing={2} justifyContent="center" direction="row" alignItems="center">
                         <Grid item xs={8}>

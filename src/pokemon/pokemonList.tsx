@@ -1,8 +1,9 @@
-import {FC, Fragment, lazy, Suspense} from 'react'
+import {FC, Fragment, lazy, Suspense, useEffect, useRef} from 'react'
 import {Box, Button, Container, Grid} from "@mui/joy";
-import {useInfiniteQuery} from '@tanstack/react-query'
+import {QueryFunctionContext, useInfiniteQuery} from '@tanstack/react-query'
 import {fetchPokemonList} from "../client/pokemon";
 import {NamedAPIResource, NamedAPIResourceList} from "pokenode-ts";
+import {useVirtualizer, VirtualItem} from "@tanstack/react-virtual";
 
 const PokemonCard = lazy(() => import('./pokemonCard'));
 
@@ -11,41 +12,83 @@ const PokemonCard = lazy(() => import('./pokemonCard'));
  * @constructor
  */
 const PokemonList: FC = (): JSX.Element => {
+    const containerRef = useRef();
     const {
-        isLoading,
-        isError,
+        status,
         data,
         error,
+        isFetching,
+        isFetchingNextPage,
         fetchNextPage,
         hasNextPage,
-        isFetchingNextPage
     } = useInfiniteQuery(['allPokemons'], fetchPokemonList, {
-        getNextPageParam: (lastPage: NamedAPIResourceList) => lastPage.next,
-        refetchInterval: false,
-        refetchOnMount: false,
-        refetchOnWindowFocus: false,
-        refetchIntervalInBackground: false,
-        refetchOnReconnect: false,
-        _optimisticResults: 'optimistic',
-        retryOnMount: false,
-        retry: false
+        getNextPageParam: (lastPage: NamedAPIResourceList) => {
+            return lastPage.next;
+        },
     });
+
+    const allRows = data
+        ? data.pages.flatMap((pokemon: NamedAPIResourceList) => pokemon.results)
+        : [];
+
+    console.log(data);
+
+    const rowVirtualizer = useVirtualizer({
+        count: hasNextPage ? allRows.length + 1 : allRows.length,
+        getScrollElement: () => containerRef.current,
+        estimateSize: () => 285,
+        overscan: 5,
+    });
+
+    useEffect(() => {
+        const [lastItem] = [...rowVirtualizer.getVirtualItems()].reverse();
+
+        if (!lastItem) {
+            return
+        }
+
+        if (
+            lastItem.index >= allRows.length - 1
+            && hasNextPage
+            && !isFetchingNextPage
+        ) {
+            fetchNextPage().then(r => console.log(r));
+        }
+    }, [
+        hasNextPage,
+        fetchNextPage,
+        allRows.length,
+        isFetchingNextPage,
+        rowVirtualizer.getVirtualItems(),
+    ]);
+
+    // console.log(rowVirtualizer.getVirtualItems());
 
     return (
         <Fragment>
             <Suspense fallback={<div>Loading..</div>}>
-                <Box sx={{width: 1, pt: 5}}>
-                    <Container maxWidth={'xl'}>
+                <Box sx={{width: 1, pt: 5, flex: 1, overflow: 'auto'}} ref={containerRef}>
+                    <Container maxWidth={'xl'} sx={{height: `${rowVirtualizer.getTotalSize()}px`, position: 'relative'}}>
                         <Grid container spacing={4} sx={{px: 2}}>
-                            {data?.pages.map((group: NamedAPIResourceList) =>
-                                group.results.map((pokemon: NamedAPIResource, pokemonIndex: number) => {
-                                    return (
-                                        <Grid item xs={2} key={pokemonIndex}>
-                                            <PokemonCard pokemon={pokemon}/>
-                                        </Grid>
-                                    );
-                                })
-                            )}
+                            {rowVirtualizer.getVirtualItems().map((virtualRow: VirtualItem<NamedAPIResource>) => {
+                                const isLoaderRow = virtualRow.index > allRows.length - 1;
+                                const pokemon: NamedAPIResource = allRows[virtualRow.index];
+
+                                return (
+                                    <Grid item xs={2} key={virtualRow.index}>
+                                        <PokemonCard pokemon={pokemon}/>
+                                    </Grid>
+                                );
+                            })}
+                            {/*{data?.pages.map((group: NamedAPIResourceList) =>*/}
+                            {/*    group.results.map((pokemon: NamedAPIResource, pokemonIndex: number) => {*/}
+                            {/*        return (*/}
+                            {/*            <Grid item xs={2} key={pokemonIndex}>*/}
+                            {/*                <PokemonCard pokemon={pokemon}/>*/}
+                            {/*            </Grid>*/}
+                            {/*        );*/}
+                            {/*    })*/}
+                            {/*)}*/}
                             <Grid container xs={12} justifyContent="center" sx={{py: 4}}>
                                 <Grid item>
                                     <Button
