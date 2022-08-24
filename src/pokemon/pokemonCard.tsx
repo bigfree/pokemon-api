@@ -1,4 +1,4 @@
-import {FC, Fragment} from 'react'
+import {FC, memo} from 'react'
 import Card from "@mui/joy/Card";
 import CardOverflow from "@mui/joy/CardOverflow";
 import AspectRatio from "@mui/joy/AspectRatio";
@@ -30,29 +30,28 @@ const PokemonCard: FC<PokemonCardProps> = ({pokemon}: PokemonCardProps): JSX.Ele
     });
 
     return (
-        <Fragment>
-            <Card variant="outlined" sx={{
-                '&:hover': {boxShadow: 'md', borderColor: 'neutral.outlinedHoverBorder'},
-                borderColor: 'primary.200'
-            }}>
-                <CardOverflow>
-                    <AspectRatio ratio="1">
-                        {!isLoading && <img
-                            src={data?.sprites.other?.['official-artwork'].front_default ?? ''}
-                            // src={data?.sprites.front_default ?? ''}
-                            alt={data?.name}
-                            loading="lazy"
-                        />}
-                    </AspectRatio>
-                </CardOverflow>
-                <Typography level="h2" sx={{fontSize: 'md', mt: 2, textTransform: 'capitalize'}}>
-                    <Link overlay underline="none">
-                        {pokemon.name}
-                    </Link>
-                </Typography>
-            </Card>
-        </Fragment>
+        <Card variant="outlined" sx={{
+            '&:hover': {boxShadow: 'md', borderColor: 'neutral.outlinedHoverBorder'},
+            borderColor: 'primary.200'
+        }}>
+            {/*Create memoize*/}
+            <CardOverflow>
+                <AspectRatio ratio="1">
+                    {!isLoading && <img
+                        src={data?.sprites.other?.['official-artwork'].front_default ?? ''}
+                        // src={data?.sprites.front_default ?? ''}
+                        alt={data?.name}
+                        loading="lazy"
+                    />}
+                </AspectRatio>
+            </CardOverflow>
+            <Typography level="h2" sx={{fontSize: 'md', mt: 2, textTransform: 'capitalize'}}>
+                <Link overlay underline="none">
+                    {pokemon.name}
+                </Link>
+            </Typography>
+        </Card>
     )
 };
 
-export default PokemonCard
+export default memo(PokemonCard)
