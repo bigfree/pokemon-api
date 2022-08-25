@@ -5,12 +5,8 @@ import './reset.css';
 import SearchBar from "./search-bar";
 import PokemonList from "./pokemon/pokemonList";
 import {Box} from "@mui/joy";
-import {Persister, removeOldestQuery} from "@tanstack/react-query-persist-client";
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
-import {ReactQueryDevtools} from '@tanstack/react-query-devtools'
-import {createSyncStoragePersister} from "@tanstack/query-sync-storage-persister";
 import {theme} from "./theme/theme";
-import {compress, decompress} from "lz-string";
 
 const queryClient: QueryClient = new QueryClient({
     defaultOptions: {
@@ -21,13 +17,13 @@ const queryClient: QueryClient = new QueryClient({
 });
 
 // const localStoragePersister: Persister = createIDBPersister('pokeapi');
-const localStoragePersister: Persister = createSyncStoragePersister({
-    storage: window.localStorage,
-    retry: removeOldestQuery,
-    key: 'pokeapi-main',
-    serialize: data => compress(JSON.stringify(data)),
-    deserialize: data => JSON.parse(decompress(data) as string),
-});
+// const localStoragePersister: Persister = createSyncStoragePersister({
+//     storage: window.localStorage,
+//     retry: removeOldestQuery,
+//     key: 'pokeapi-main',
+//     serialize: data => compress(JSON.stringify(data)),
+//     deserialize: data => JSON.parse(decompress(data) as string),
+// });
 
 const App: FC = (): JSX.Element => {
     return (
@@ -45,7 +41,6 @@ const App: FC = (): JSX.Element => {
                     </Box>
                 </Fragment>
             </CssVarsProvider>
-            <ReactQueryDevtools initialIsOpen={false}/>
         </QueryClientProvider>
     )
 };
