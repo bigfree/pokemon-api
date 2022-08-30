@@ -2,6 +2,7 @@ import SearchBar from "../search-bar";
 import PokemonList from "../pokemon/pokemonList";
 import {Box} from "@mui/joy";
 import {FC, Fragment} from "react";
+import groundBackgroundImageSrc from './../assets/ground-background.png';
 
 const HomePage: FC = (): JSX.Element => {
     return (
@@ -20,7 +21,7 @@ const HomePage: FC = (): JSX.Element => {
                     flexWrap: 'nowrap',
                     flex: 1,
                     overflow: 'auto',
-                    backgroundImage: 'url(/public/ground-background.png)',
+                    backgroundImage: `url(${groundBackgroundImageSrc})`,
                     backgroundPosition: 'bottom',
                     backgroundRepeat: 'repeat-x',
                     backgroundSize: 'contain'

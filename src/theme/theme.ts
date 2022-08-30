@@ -26,6 +26,7 @@ export const theme: Theme = extendTheme({
                 pokemonBorder: {
                     default: "#4d4d4d",
                     cardContent: "#A23232",
+                    asideDivider: '#fdf180',
                 },
                 pokemonRed: {
                     primary: {
