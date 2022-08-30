@@ -14,10 +14,7 @@ const PokemonCard = lazy(() => import('./pokemonCard'));
 const PokemonList: FC = (): JSX.Element => {
     const {ref, inView} = useInView()
     const {
-        status,
         data,
-        error,
-        isFetching,
         isFetchingNextPage,
         fetchNextPage,
         hasNextPage,
@@ -33,18 +30,16 @@ const PokemonList: FC = (): JSX.Element => {
         }
     }, [inView]);
 
-    // console.log(rowVirtualizer.getVirtualItems());
-
     return (
         <Fragment>
             <Suspense fallback={<div>Loading..</div>}>
-                <Box sx={{width: 1, pt: 5, flex: 1, overflow: 'auto'}}>
+                <Box sx={{width: 1, pt: 5, flex: '1 1 100%'}}>
                     <Container maxWidth={'xl'}>
-                        <Grid container spacing={4} sx={{px: 2}}>
+                        <Grid container spacing={4}>
                             {data?.pages.map((group: NamedAPIResourceList) =>
                                 group.results.map((pokemon: NamedAPIResource, pokemonIndex: number) => {
                                     return (
-                                        <Grid item xs={2} key={pokemonIndex}>
+                                        <Grid item xs={6} md={3} lg={2} key={pokemonIndex}>
                                             <PokemonCard pokemon={pokemon}/>
                                         </Grid>
                                     );

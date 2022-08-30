@@ -1,12 +1,12 @@
-import {FC, Fragment} from 'react'
+import {FC} from 'react'
 import {CssVarsProvider} from '@mui/joy/styles';
-import Header from "./header";
 import './reset.css';
-import SearchBar from "./search-bar";
-import PokemonList from "./pokemon/pokemonList";
-import {Box} from "@mui/joy";
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 import {theme} from "./theme/theme";
+import {BrowserRouter, Route, Routes} from "react-router-dom";
+import HomePage from "./pages/homePage";
+import AppLayout from "./layouts/appLayout";
+import PokemonDetailPage from "./pages/pokemonDetailPage";
 
 const queryClient: QueryClient = new QueryClient({
     defaultOptions: {
@@ -29,17 +29,16 @@ const App: FC = (): JSX.Element => {
     return (
         <QueryClientProvider client={queryClient}>
             <CssVarsProvider theme={theme}>
-                <Fragment>
-                    <Box sx={{
-                        display: 'flex',
-                        flexFlow: 'column',
-                        height: '100vh',
-                    }}>
-                        <Header/>
-                        <SearchBar/>
-                        <PokemonList/>
-                    </Box>
-                </Fragment>
+                <BrowserRouter>
+                    <Routes>
+                        <Route element={<AppLayout/>}>
+                            <Route path='/' element={<HomePage/>}>
+                                <Route path=':pokemonName' element={<PokemonDetailPage/>}/>
+                                <Route path='*' element={<p>404 page</p>}/>
+                            </Route>
+                        </Route>
+                    </Routes>
+                </BrowserRouter>
             </CssVarsProvider>
         </QueryClientProvider>
     )

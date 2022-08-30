@@ -17,6 +17,16 @@ export const theme: Theme = extendTheme({
                 primary: {
 
                 },
+                background: {
+                    body: '#e84848',
+                    aside: '#FDF079',
+                    search: '#44BDD0',
+                    cardContent: '#BA3A3A',
+                },
+                pokemonBorder: {
+                    default: "#4d4d4d",
+                    cardContent: "#A23232",
+                },
                 pokemonRed: {
                     primary: {
                         "50": "#ffede8",
