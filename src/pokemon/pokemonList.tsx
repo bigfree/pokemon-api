@@ -19,6 +19,8 @@ const PokemonList: FC = (): JSX.Element => {
         fetchNextPage,
         hasNextPage,
     } = useInfiniteQuery(['allPokemons'], fetchPokemonList, {
+        refetchInterval: false,
+        refetchOnWindowFocus: false,
         getNextPageParam: (lastPage: NamedAPIResourceList) => {
             return lastPage.next;
         }

@@ -17,6 +17,8 @@ const PokemonCard: FC<PokemonCardProps> = ({pokemon}: PokemonCardProps): JSX.Ele
         return fetchPokemonByName(pokemon.name);
     }, {
         enabled: !!pokemon,
+        refetchInterval: false,
+        refetchOnWindowFocus: false,
     });
 
     return (

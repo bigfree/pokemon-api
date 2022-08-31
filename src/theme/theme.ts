@@ -11,6 +11,15 @@ declare module '@mui/joy/styles' {
 
 
 export const theme: Theme = extendTheme({
+    components: {
+        JoyTextField: {
+            styleOverrides: {
+                root: {
+                    borderRadius: 0,
+                }
+            }
+        }
+    },
     colorSchemes: {
         light: {
             palette: {
