@@ -7,6 +7,7 @@ import {useQuery} from "@tanstack/react-query";
 import {fetchPokemonByName} from "../../../client/pokemon";
 import {useNavigate} from "react-router-dom";
 import PokemonCardTypes from "./pokemonCardTypes";
+import pokeBallSvgImageUrl from './../../../assets/moves/pokeball.svg';
 
 type PokemonCardProps = {
     pokemon: NamedAPIResource;
@@ -28,11 +29,12 @@ const PokemonCard: FC<PokemonCardProps> = ({pokemon}: PokemonCardProps): JSX.Ele
             sx={{
                 p: 1,
                 borderRadius: 6,
+                borderTopLeftRadius: 0,
                 boxShadow: '4px 4px',
                 // '&:hover': {boxShadow: 'md', borderColor: 'neutral.outlinedHoverBorder'},
                 borderColor: 'pokemonBorder.default',
                 backgroundColor: 'background.body',
-                cursor: 'pointer'
+                cursor: 'pointer',
             }}
             onClick={() => navigate(data?.name ?? '')}
         >
@@ -43,9 +45,23 @@ const PokemonCard: FC<PokemonCardProps> = ({pokemon}: PokemonCardProps): JSX.Ele
                 marginBottom={1}
                 alignItems={'center'}
             >
-                <Grid xs px={1}>
-                    <Typography textColor={'#461616'} fontSize={13} fontWeight={'bold'}>
-                        #{data?.order.toLocaleString('cs-CS', {
+                <Grid xs px={0.5} sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    '& > img': {
+                        maxHeight: 13,
+                        mr: 0.6
+                    }
+                }}>
+                    <img src={pokeBallSvgImageUrl} alt={''}/>
+                    <Typography
+                        textColor={'#461616'}
+                        fontSize={13}
+                        fontWeight={'bold'}
+                        lineHeight={0}
+                        pt={0.4}
+                    >
+                        {data?.order.toLocaleString('cs-CS', {
                             minimumIntegerDigits: 4,
                             useGrouping: false
                         })}
@@ -92,7 +108,7 @@ const PokemonCard: FC<PokemonCardProps> = ({pokemon}: PokemonCardProps): JSX.Ele
                 <Typography
                     level="h2"
                     sx={{
-                        fontSize: 'md',
+                        fontSize: 16,
                         fontWeight: 'normal',
                         textTransform: 'capitalize',
                         color: 'white'

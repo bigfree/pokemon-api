@@ -32,7 +32,7 @@ const PokemonCardTypes: FC<PokemonCardTypesProps> = (props: PokemonCardTypesProp
                 mr: 0.5,
             }}>
                 <AspectRatio variant={'plain'} ratio={1} objectFit={'contain'} maxHeight={sizeHeight}>
-                    <img src={typeSrc} alt=""/>
+                    <img src={typeSrc} alt={`Pokemon type ${typeName}`} loading={'lazy'}/>
                 </AspectRatio>
             </Box>
         </Fragment>
