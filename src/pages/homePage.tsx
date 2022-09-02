@@ -1,5 +1,5 @@
 import SearchBar from "../search-bar";
-import PokemonList from "../pokemon/pokemonList";
+import PokemonList from "../components/pokemon/pokemonList";
 import {Box} from "@mui/joy";
 import {FC, Fragment} from "react";
 import groundBackgroundImageSrc from './../assets/ground-background.png';

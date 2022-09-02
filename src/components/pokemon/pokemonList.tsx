@@ -1,11 +1,11 @@
 import {FC, Fragment, lazy, Suspense, useEffect} from 'react'
 import {Box, Button, Container, Grid} from "@mui/joy";
 import {useInfiniteQuery} from '@tanstack/react-query'
-import {fetchPokemonList} from "../client/pokemon";
 import {NamedAPIResource, NamedAPIResourceList} from "pokenode-ts";
 import {useInView} from "react-intersection-observer";
+import {fetchPokemonList} from "../../client/pokemon";
 
-const PokemonCard = lazy(() => import('./pokemonCard'));
+const PokemonCard = lazy(() => import('./card/pokemonCard'));
 
 /**
  * Pokemon List component
@@ -41,7 +41,7 @@ const PokemonList: FC = (): JSX.Element => {
                             {data?.pages.map((group: NamedAPIResourceList) =>
                                 group.results.map((pokemon: NamedAPIResource, pokemonIndex: number) => {
                                     return (
-                                        <Grid item xs={6} md={3} lg={2} key={pokemonIndex}>
+                                        <Grid xs={6} md={3} lg={2} key={pokemonIndex}>
                                             <PokemonCard pokemon={pokemon}/>
                                         </Grid>
                                     );
@@ -49,7 +49,7 @@ const PokemonList: FC = (): JSX.Element => {
                             )}
                         </Grid>
                         <Grid container xs={12} justifyContent="center" sx={{pb: 4, pt: 5}}>
-                            <Grid item>
+                            <Grid>
                                 <Button
                                     ref={ref}
                                     onClick={() => fetchNextPage()}

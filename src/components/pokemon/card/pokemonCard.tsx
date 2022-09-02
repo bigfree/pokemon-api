@@ -1,11 +1,12 @@
 import {FC, memo} from 'react'
 import Card from "@mui/joy/Card";
 import AspectRatio from "@mui/joy/AspectRatio";
-import {Box, Typography} from "@mui/joy";
-import {NamedAPIResource} from "pokenode-ts";
+import {Box, Grid, Typography} from "@mui/joy";
+import {NamedAPIResource, PokemonType} from "pokenode-ts";
 import {useQuery} from "@tanstack/react-query";
-import {fetchPokemonByName} from "../client/pokemon";
+import {fetchPokemonByName} from "../../../client/pokemon";
 import {useNavigate} from "react-router-dom";
+import PokemonCardTypes from "./pokemonCardTypes";
 
 type PokemonCardProps = {
     pokemon: NamedAPIResource;
@@ -35,6 +36,29 @@ const PokemonCard: FC<PokemonCardProps> = ({pokemon}: PokemonCardProps): JSX.Ele
             }}
             onClick={() => navigate(data?.name ?? '')}
         >
+            <Grid
+                container
+                spacing={0}
+                padding={0}
+                marginBottom={1}
+                alignItems={'center'}
+            >
+                <Grid xs px={1}>
+                    <Typography textColor={'#461616'} fontSize={13} fontWeight={'bold'}>
+                        #{data?.order.toLocaleString('cs-CS', {
+                            minimumIntegerDigits: 4,
+                            useGrouping: false
+                        })}
+                    </Typography>
+                </Grid>
+                {data?.types.map((type: PokemonType, index: number) => {
+                    return (
+                        <Grid xs={'auto'} key={index}>
+                            <PokemonCardTypes pokemonType={type}/>
+                        </Grid>
+                    );
+                })}
+            </Grid>
             {/*Create memoize*/}
             <AspectRatio
                 variant='plain'
@@ -69,6 +93,7 @@ const PokemonCard: FC<PokemonCardProps> = ({pokemon}: PokemonCardProps): JSX.Ele
                     level="h2"
                     sx={{
                         fontSize: 'md',
+                        fontWeight: 'normal',
                         textTransform: 'capitalize',
                         color: 'white'
                     }}

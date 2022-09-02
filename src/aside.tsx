@@ -1,16 +1,38 @@
 import {FC} from 'react'
-import {Box, Button} from "@mui/joy";
-import asideHeaderImageUrl from './assets/valor.png';
+import {Box} from "@mui/joy";
 import {Divider} from "@mui/material";
-import pikachuImageSrc from './assets/pikachu.png';
-import {useNavigate} from "react-router-dom";
+import AsideButton from "./components/asideButton";
+import asideHeaderImageUrl from './assets/aside-menu/valor.png';
+import pokemonTrainerImageSrc from './assets/aside-menu/pokemon-trainer.png';
+import superBallImageSrc from './assets/aside-menu/superball.png';
+import pokedexImageSrc from './assets/aside-menu/pokedex.png';
+
+type AsideMenuButtonsItems = {
+    name: string;
+    navigate: string;
+    iconUrl: string;
+}
 
 /**
  * Header component
  * @constructor
  */
 const Aside: FC = (): JSX.Element => {
-    const navigate = useNavigate();
+    const asideMenuButtonsItems: AsideMenuButtonsItems[] = [
+        {
+            name: 'My',
+            navigate: '/my',
+            iconUrl: pokemonTrainerImageSrc,
+        }, {
+            name: 'Pokemons',
+            navigate: '/pokemons',
+            iconUrl: superBallImageSrc,
+        }, {
+            name: 'Pokedex',
+            navigate: '/pokedex',
+            iconUrl: pokedexImageSrc,
+        }
+    ]
 
     return (
         <Box component="nav" sx={{
@@ -40,69 +62,9 @@ const Aside: FC = (): JSX.Element => {
                 display: 'flex',
                 flexFlow: 'column',
             }}>
-                <Button
-                    variant={'outlined'}
-                    color={'neutral'}
-                    startIcon={<img src={pikachuImageSrc} alt=""/>}
-                    onClick={() => navigate('/')}
-                    sx={{
-                        fontSize: 13,
-                        borderColor: '#e6da6e',
-                        backgroundColor: '#f5e975',
-                        height: 'auto',
-                        display: 'flex',
-                        flexFlow: 'column',
-                        alignItems: 'center',
-                        borderRadius: 4,
-                        boxShadow: '2px 2px #f5e975',
-                        p: 1,
-                        maxWidth: 1,
-                        mb: 2,
-                        '& > span': {
-                            mx: 0,
-                            mb: 0.5
-                        },
-                        '& img': {
-                            maxHeight: 34
-                        },
-                        '&:hover': {
-                            boxShadow: '2px 2px #e6da6e',
-                            borderColor: '#e6da6e',
-                            backgroundColor: '#f5e975',
-                        }
-                    }}
-                >Pokemon</Button>
-                <Button
-                    variant={'outlined'}
-                    color={'neutral'}
-                    startIcon={<img src={pikachuImageSrc} alt=""/>}
-                    onClick={() => navigate('/')}
-                    sx={{
-                        fontSize: 13,
-                        borderColor: '#e6da6e',
-                        backgroundColor: '#f5e975',
-                        height: 'auto',
-                        display: 'flex',
-                        flexFlow: 'column',
-                        alignItems: 'center',
-                        borderRadius: 4,
-                        boxShadow: '2px 2px #f5e975',
-                        p: 1,
-                        maxWidth: 1,
-                        '& > span': {
-                            mx: 0,
-                            mb: 0.5
-                        },
-                        '& img': {
-                            maxHeight: 34
-                        },
-                        '&:hover': {
-                            boxShadow: '2px 2px #e6da6e',
-                            borderColor: '#e6da6e',
-                            backgroundColor: '#f5e975',
-                        }
-                    }}
-                >Games</Button>
+                {asideMenuButtonsItems.map((item: AsideMenuButtonsItems, index: number) => (
+                    <AsideButton key={index} {...item}/>
+                ))}
             </Box>
             {/*<Typography level='h4' component="h4" fontStyle={'sm'}>PokeAPI</Typography>*/}
         </Box>

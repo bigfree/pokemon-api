@@ -1,12 +1,14 @@
 import {FC} from 'react'
 import {CssVarsProvider} from '@mui/joy/styles';
-import './reset.css';
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 import {theme} from "./theme/theme";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import HomePage from "./pages/homePage";
 import AppLayout from "./layouts/appLayout";
 import PokemonDetailPage from "./pages/pokemonDetailPage";
+
+import './reset.css';
+import 'virtual:fonts.css'
 
 const queryClient: QueryClient = new QueryClient({
     defaultOptions: {
